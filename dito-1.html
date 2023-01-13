@@ -1,0 +1,280 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>HTML</title>
+  
+  <!-- HTML -->
+  <style>
+*{
+  margin: 0;
+  padding: 0;
+}
+body {
+    display: flex;
+    font-family: sans-serif;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    min-height: 100vh;
+    background-color: #FFF;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url('/bg.webp');
+}
+.from{
+  background: white;
+  box-shadow: 0px 0px 10px #21BF73;
+  padding: 20px;
+  width: 315px;
+  border-radius: 5px;
+}
+h1{
+  text-align: center;
+  font-size: 18px;
+  color: #21BF73;
+}
+.result1{
+  border-radius: 1px;
+  height: 190px;
+  display: flex;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border: 2px dashed #21BF73;
+  margin-top: 10px;
+}
+.result1.active{
+  border: none;
+  display: block;
+}
+.result1 .thumbnail{
+  width: 100%;
+  height: 100%;
+  border-radius: 1px;
+}
+.result1.active span{
+  display: none;
+}
+.result1 span{
+  color: #21BF73;
+  margin-top: 10px;
+  text-align: center;
+  font-size: 20px;
+}
+.link{
+    width: 300px;
+    height: 30px;
+    margin-top: 15px;
+    text-align: center;
+    border: 2px solid #21BF73;
+    border-radius: 1px;
+    padding: 5px;
+    color: #21BF73;
+}
+.link::placeholder{
+  color: #21BF73;
+}
+.format{
+    width: 315px;
+    height: 45px;
+    margin-top: 15px;
+    text-align: center;
+    border: 2px solid #21BF73;
+    border-radius: 1px;
+    padding: 5px;
+    color: #21BF73;
+}
+.Get{
+    width: 100%;
+    height: 45px;
+    display: block;
+    background-color: #21BF73;
+    border: none;
+    padding: 5px;
+    font-size: 18px;
+    color: #fff;
+    font-weight: 600;
+    padding: 12px 25px;
+    margin-top: 10px;
+    border-radius: 1px;
+    cursor: pointer;
+    outline: none;
+}
+.hidden{
+  display: none;
+}
+.hidden.active{
+  display: block;
+}
+.result2{
+  margin-top: 10px;
+}
+</style>
+
+
+</head>
+
+<body>
+  <div class="from">
+      <h1>YouTube Video Downloader</h1>
+      <div class="result1">
+        <span>🔗 Enter Your YouTube Video Url</span>
+      </div>
+      <input type="text" class="link YouTube" placeholder="Enter Your YouTube Url..."  />
+      <select class="format" required onchange="Getdownload()">
+         <option disabled selected="">Select Video Option</option>
+         <option value="Thumbnail">Download Video Thumbnail</option>
+         <option disabled>Select Song format</option>
+         <option value="mp3">Mp3</option>
+         <option value="m4a">M4A</option>
+         <option disabled>Select Video format</option>
+         <option value="360">360p</option>
+         <option value="480">480p</option>
+         <option value="720">720p</option>
+         <option value="1080">1080p</option>
+         <option value="4k">4k</option>
+         <option value="8k">8k</option>
+      </select>
+    <div class="hidden">
+        <input type="text" name="type" class="link Idurl" hidden>
+        <input type="url" name="url" class="link form-control" hidden>
+        <div class="result2"></div>
+    </div>
+ </div>
+  <!-- Project -->
+ <script src="main.js">
+var YouTube=document.querySelector('.YouTube');
+var format=document.querySelector('.format');
+var hidden=document.querySelector('.hidden');
+var Idurl=document.querySelector('.Idurl');
+var result1=document.querySelector('.result1');
+var thumbnail=document.querySelector('thumbnail');
+
+function preview(){
+  if(YouTube.value.indexOf("https://youtu.be/") != -1){
+    var url1 = YouTube.value.replace("https://youtu.be/","https://www.youtube.com/embed/");
+    document.querySelector('.result1').innerHTML = `<iframe width="100%" height="190" src="${url1}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
+  }
+  else if(YouTube.value.indexOf("https://www.youtube.com/watch?v=") != -1){
+    var url1 = YouTube.value.replace("https://www.youtube.com/watch?v=","https://www.youtube.com/embed/");
+    document.querySelector('.result1').innerHTML = `<iframe width="100%" height="190" src="${url1}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+   }
+  else if (YouTube.value.indexOf("https://youtube.com/shorts/") != -1){
+    var url1 = YouTube.value.replace("https://youtube.com/shorts/", "https://www.youtube.com/embed/");
+    var urlSe = url1.replace("?feature=share", "");
+    document.querySelector('.result1').innerHTML = `<iframe width="100%" height="190" src="${urlSe}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+  }
+}
+
+function GetId(){
+  if(YouTube.value!=""){
+    if(YouTube.value.indexOf("https://youtu.be/") != -1){
+     var url1 = YouTube.value.replace("https://youtu.be/","");
+    document.querySelector('.Idurl').value=url1;
+    }
+   else if(YouTube.value.indexOf("https://www.youtube.com/watch?v=") != -1){
+     var url1 = YouTube.value.replace("https://www.youtube.com/watch?v=","");
+    document.querySelector('.Idurl').value=url1;
+    }
+   else if (YouTube.value.indexOf("https://youtube.com/shorts/") != -1){
+     var url1 = YouTube.value.replace("https://youtube.com/shorts/", "");
+     var urlSe = url1.replace("?feature=share", "");
+     document.querySelector('.Idurl').value= urlSe;
+    }
+  }
+}
+
+function Getdownload(){
+ GetId();
+  if(YouTube.value!=""){
+    switch (format.value){
+      case "Thumbnail":
+         hidden.classList.add('active');
+         result1.classList.add('active');
+         var url2 = `https://img.youtube.com/vi/${Idurl.value}/maxresdefault.jpg`;
+         document.querySelector('.result1').innerHTML = `<img src="${url2}" class="thumbnail"/>`;
+         document.querySelector('.form-control').value = url2;
+         document.querySelector('.result2').innerHTML = `<button class="Get" onclick="download()">Download Video Thumbnail</button>`;
+      break;
+      case "mp3":
+         hidden.classList.add('active');
+         result1.classList.add('active');
+         var url2 = `https://loader.to/api/button/?url=https://youtu.be/${Idurl.value}&f=mp3`;
+         document.querySelector('.result2').innerHTML = `<iframe style="width:100%;height:45px;border:hidden;overflow:hidden;" scrolling="no" src="${url2}"></iframe>`;
+         preview();
+      break;
+      case "m4a":
+         hidden.classList.add('active');
+         result1.classList.add('active');
+         var url2 = `https://loader.to/api/button/?url=https://youtu.be/${Idurl.value}&f=m4a`;
+         document.querySelector('.result2').innerHTML = `<iframe style="width:100%;height:45px;border:hidden;overflow:hidden;" scrolling="no" src="${url2}"></iframe>`;
+         preview();
+      break;
+      case "360":
+         hidden.classList.add('active');
+         result1.classList.add('active');
+         var url2 = `https://loader.to/api/button/?url=https://youtu.be/${Idurl.value}&f=360`;
+         document.querySelector('.result2').innerHTML = `<iframe style="width:100%;height:45px;border:hidden;overflow:hidden;" scrolling="no" src="${url2}"></iframe>`;
+         preview();
+      break;
+      case "480":
+         hidden.classList.add('active');
+         result1.classList.add('active');
+         var url2 = `https://loader.to/api/button/?url=https://youtu.be/${Idurl.value}&f=480`;
+         document.querySelector('.result2').innerHTML = `<iframe style="width:100%;height:45px;border:hidden;overflow:hidden;" scrolling="no" src="${url2}"></iframe>`;
+         preview();
+      break;
+      case "720":
+         hidden.classList.add('active');
+         result1.classList.add('active');
+         var url2 = `https://loader.to/api/button/?url=https://youtu.be/${Idurl.value}&f=720`;
+         document.querySelector('.result2').innerHTML = `<iframe style="width:100%;height:45px;border:hidden;overflow:hidden;" scrolling="no" src="${url2}"></iframe>`;
+         preview();
+      break;
+      case "1080":
+         hidden.classList.add('active');
+         result1.classList.add('active');
+         var url2 = `https://loader.to/api/button/?url=https://youtu.be/${Idurl.value}&f=1080`;
+         document.querySelector('.result2').innerHTML = `<iframe style="width:100%;height:45px;border:hidden;overflow:hidden;" scrolling="no" src="${url2}"></iframe>`;
+         preview();
+      break;
+      case "4k":
+         hidden.classList.add('active');
+         result1.classList.add('active');
+         var url2 = `https://loader.to/api/button/?url=https://youtu.be/${Idurl.value}&f=4k`;
+         document.querySelector('.result2').innerHTML = `<iframe style="width:100%;height:45px;border:hidden;overflow:hidden;" scrolling="no" src="${url2}"></iframe>`;
+         preview();
+      break;
+      case "8k":
+         hidden.classList.add('active');
+         result1.classList.add('active');
+         var url2 = `https://loader.to/api/button/?url=https://youtu.be/${Idurl.value}&f=8k`;
+         document.querySelector('.result2').innerHTML = `<iframe style="width:100%;height:45px;border:hidden;overflow:hidden;" scrolling="no" src="${url2}"></iframe>`;
+         preview();
+      break;
+    }
+  }
+  else {
+    alert('Enter Your YouTube Url');
+  }
+}
+var url = document.querySelector('.form-control');
+function download(){
+     const anchor = document.createElement("a");
+     anchor.href =  url.value;
+     anchor.download = 'MWC.jpg';
+     document.body.appendChild(anchor);
+     anchor.click();
+     document.body.removeChild(anchor);
+ }
+</script>
+</body>
+</html>
